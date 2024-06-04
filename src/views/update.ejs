@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Update User</title>
+        <link rel="stylesheet" href="/css/home.css" />
+        <link
+            rel="stylesheet"
+            href="https://www.w3schools.com/w3css/4/w3.css"
+        />
+    </head>
+    <body>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/create">Create User</a></li>
+        </ul>
+
+        <h1>Học Node Js</h1>
+        <hr />
+        <div class="form-add-new">
+            <form action="/update-user" method="post">
+                <fieldset class="form-content">
+                    <legend>Update user</legend>
+                    <div class="input-group d-none">
+                        <label for="">ID: </label>
+                        <input
+                            type="text"
+                            name="userId"
+                            value="<%= userUpdate.id %>"
+                        />
+                    </div>
+
+                    <div class="input-group">
+                        <label for="">Email: </label>
+                        <input
+                            type="text"
+                            name="email"
+                            value="<%= userUpdate.email %>"
+                        />
+                    </div>
+
+                    <div class="input-group">
+                        <label for="">Name: </label>
+                        <input
+                            type="text"
+                            name="name"
+                            value="<%=
+                        userUpdate.name %>"
+                        />
+                    </div>
+
+                    <div class="input-group">
+                        <label for="">City: </label>
+                        <input
+                            type="text"
+                            name="city"
+                            value="<%=
+                        userUpdate.city %>"
+                        />
+                    </div>
+
+                    <div>
+                        <button class="btn btn-save">Save</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </body>
+</html>

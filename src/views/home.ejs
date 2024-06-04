@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Học Node Js</title>
+        <link rel="stylesheet" href="/css/home.css" />
+        <link
+            rel="stylesheet"
+            href="https://www.w3schools.com/w3css/4/w3.css"
+        />
+    </head>
+    <body>
+        <ul>
+            <li><a class="active" href="/">Home</a></li>
+            <li><a href="/create">Create User</a></li>
+        </ul>
+        <h1>Học Node Js</h1>
+        <hr />
+
+        <div class="table-container w3-container">
+            <h2 class="title">List Users</h2>
+            <!-- <%= JSON.stringify(data) %> -->
+            <table class="w3-table-all w3-hoverable">
+                <thead>
+                    <tr class="w3-light-grey">
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>City</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <% data.forEach(function(user){%>
+                <tr>
+                    <td><%= user.id %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.name %></td>
+                    <td><%= user.city %></td>
+                    <th>
+                        <a href="/update/<%= user.id %>"
+                            ><button class="btn btn-edit">Update</button></a
+                        >
+                        <form
+                            action="/delete-user/<%= user.id %>"
+                            method="POST"
+                        >
+                            <button class="btn btn-delete">Delete</button>
+                        </form>
+                    </th>
+                </tr>
+                <% }); %>
+            </table>
+        </div>
+    </body>
+</html>
