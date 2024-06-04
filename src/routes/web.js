@@ -5,7 +5,7 @@ const {
     getHomepage,
     getShoppage,
     getCreatePage,
-    getCreateUser,
+    postCreateUser,
     getUpdatePage,
     postUpdateUser,
     postDeleteUser,
@@ -19,7 +19,7 @@ router.get("/shop", getShoppage);
 router.get("/create", getCreatePage);
 router.get("/update/:id", getUpdatePage);
 
-router.post("/create-user", getCreateUser);
+router.post("/create-user", postCreateUser);
 router.post("/update-user", postUpdateUser);
 router.post("/delete-user/:id", postDeleteUser);
 router.post("/delete-user", postHandleRemoveUser);

@@ -5,11 +5,12 @@ const {
     updateUserById,
     deleteUserById,
 } = require("../services/CRUDService");
+const User = require("../models/User");
 
 const getHomepage = async (req, res) => {
     //process data
     //call model
-    const results = await getAllUsers();
+    const results = [];
     return res.render("home.ejs", { data: results });
 };
 const getShoppage = (req, res) => {
@@ -25,28 +26,23 @@ const getUpdatePage = async (req, res) => {
     res.render("update.ejs", { userUpdate: user });
 };
 
-const getCreateUser = async (req, res) => {
+const postCreateUser = async (req, res) => {
     let email = req.body.email;
     let name = req.body.name;
     let city = req.body.city;
 
-    // connection.query(
+    // let [results, fields] = await connection.query(
     //     `INSERT INTO Users (email, name, city)
-    //     VALUES (?, ?, ?)`,
-    //     [email, name, city],
-    //     function (err, results) {
-    //         console.log(results);
-    //         res.send("create user succes!");
-    //     }
+    // VALUES (?, ?, ?)`,
+    //     [email, name, city]
     // );
 
-    let [results, fields] = await connection.query(
-        `INSERT INTO Users (email, name, city)
-    VALUES (?, ?, ?)`,
-        [email, name, city]
-    );
+    await User.create({
+        email,
+        name,
+        city,
+    });
 
-    console.log("--> Check: ", results);
     res.send("create user succes!");
 
     // A simple SELECT query
@@ -84,7 +80,7 @@ module.exports = {
     getHomepage,
     getShoppage,
     getCreatePage,
-    getCreateUser,
+    postCreateUser,
     getUpdatePage,
     postUpdateUser,
     postDeleteUser,
