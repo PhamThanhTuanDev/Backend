@@ -18,9 +18,13 @@ configViewEngine(app);
 //Khai báo Route
 app.use("/", webRoutes);
 
-// A simple SELECT query
-//connection.query("SELECT * FROM `Users`", function (err, results, fields) {});
-
-app.listen(port, hostname, () => {
-    console.log(`http://localhost:${port}`);
-});
+(async () => {
+    try {
+        await connection();
+        app.listen(port, hostname, () => {
+            console.log(`http://localhost:${port}`);
+        });
+    } catch (e) {
+        console.log(">>>Eror connect to DB: ", e);
+    }
+})();
