@@ -10,7 +10,7 @@ const User = require("../models/User");
 const getHomepage = async (req, res) => {
     //process data
     //call model
-    const results = [];
+    const results = await User.find({});
     return res.render("home.ejs", { data: results });
 };
 const getShoppage = (req, res) => {
@@ -22,7 +22,8 @@ const getCreatePage = (req, res) => {
 };
 const getUpdatePage = async (req, res) => {
     const userId = req.params.id;
-    let user = await getUserById(userId);
+    //let user = await getUserById(userId);
+    let user = await User.findById(userId).exec();
     res.render("update.ejs", { userUpdate: user });
 };
 
@@ -31,12 +32,6 @@ const postCreateUser = async (req, res) => {
     let name = req.body.name;
     let city = req.body.city;
 
-    // let [results, fields] = await connection.query(
-    //     `INSERT INTO Users (email, name, city)
-    // VALUES (?, ?, ?)`,
-    //     [email, name, city]
-    // );
-
     await User.create({
         email,
         name,
@@ -44,15 +39,6 @@ const postCreateUser = async (req, res) => {
     });
 
     res.send("create user succes!");
-
-    // A simple SELECT query
-    // connection.query(
-    //     "SELECT * FROM `Users`",
-    //     function (err, results, fields) {}
-    // );
-
-    // const [results, fields] = await connection.query("SELECT * FROM `Users`");
-    // console.log("--> Check: ", results);
 };
 
 const postUpdateUser = async (req, res) => {
@@ -60,7 +46,11 @@ const postUpdateUser = async (req, res) => {
     let name = req.body.name;
     let city = req.body.city;
     let userId = req.body.userId;
-    await updateUserById(email, name, city, userId);
+    // await updateUserById(email, name, city, userId);
+    await User.updateOne(
+        { _id: userId },
+        { email: email, name: name, city: city }
+    );
     res.redirect("/");
 };
 
