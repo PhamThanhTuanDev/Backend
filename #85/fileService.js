@@ -1,15 +1,15 @@
-const path = require("path"); //fs: file system
+const path = require("path");
 
 const uploadSingleFile = async (fileObject) => {
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-    //let uploadPath = __dirname + fileObject.name;
 
-    // Use the mv() method to place the file somewhere on your server
-
-    //save => public/image/upload
+    // save => public/images/upload
+    //remember to create the upload folder first
     let uploadPath = path.resolve(__dirname, "../public/images/upload");
+    // console.log(">>> check fileObject: ", path.resolve(__dirname, "../public/images/upload"))
 
-    //abc.png => abc-timestamp.png
+    // abc.png => abc-timestamp.png
+
     //get image extension
     let extName = path.extname(fileObject.name);
 
@@ -17,36 +17,36 @@ const uploadSingleFile = async (fileObject) => {
     let baseName = path.basename(fileObject.name, extName);
 
     //create final path: eg: /upload/your-image.png
-    let finalName = `${baseName}-${Date.now()}${extName}`;
+    let finalName = `${baseName}-${Date.now()}${extName}`
     let finalPath = `${uploadPath}/${finalName}`;
 
-    //console.log("final path: ", finalPath)
-
-    //upload mutiple files
+    // console.log("final path: ", finalPath)
 
     try {
         await fileObject.mv(finalPath);
         return {
-            status: "success",
+            status: 'success',
             path: finalName,
-            error: null,
-        };
+            error: null
+        }
     } catch (err) {
-        console.log(">>> Check err: ", err);
+        console.log(">>> check error: ", err)
         return {
-            status: "failed",
+            status: 'failed',
             path: null,
-            error: JSON.stringify(err),
-        };
+            error: JSON.stringify(err)
+        }
     }
-};
+}
 
-const uploadMultipleFile = async (filesArr) => {
+const uploadMultipleFiles = async (filesArr) => {
     try {
         let uploadPath = path.resolve(__dirname, "../public/images/upload");
+
         let resultArr = [];
         let countSuccess = 0;
         for (let i = 0; i < filesArr.length; i++) {
+            console.log("check i = ", i)
             //get image extension
             let extName = path.extname(filesArr[i].name);
 
@@ -54,36 +54,39 @@ const uploadMultipleFile = async (filesArr) => {
             let baseName = path.basename(filesArr[i].name, extName);
 
             //create final path: eg: /upload/your-image.png
-            let finalName = `${baseName}-${Date.now()}${extName}`;
+            let finalName = `${baseName}-${Date.now()}${extName}`
             let finalPath = `${uploadPath}/${finalName}`;
+
             try {
                 await filesArr[i].mv(finalPath);
                 resultArr.push({
-                    status: "success",
+                    status: 'success',
                     path: finalName,
-                    finalName: filesArr[i].name,
-                    error: null,
-                });
+                    fileName: filesArr[i].name,
+                    error: null
+                })
                 countSuccess++;
             } catch (err) {
                 resultArr.push({
-                    status: "failed",
+                    status: 'failed',
                     path: null,
-                    finalName: filesArr[i].name,
-                    error: JSON.stringify(err),
-                });
+                    fileName: filesArr[i].name,
+                    error: JSON.stringify(err)
+                })
             }
         }
+
         return {
             countSuccess: countSuccess,
-            detail: resultArr,
-        };
+            detail: resultArr
+        }
+
     } catch (error) {
-        console.log(error);
+        console.log(error)
     }
-};
+
+}
 
 module.exports = {
-    uploadSingleFile,
-    uploadMultipleFile,
-};
+    uploadSingleFile, uploadMultipleFiles
+}

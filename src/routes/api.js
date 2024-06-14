@@ -8,6 +8,7 @@ const {
     putUpdateUserAPI,
     deleteUserAPI,
     postUploadSingleFileAPI,
+    postuploadMultipleFilesAPI,
 } = require("../controllers/apiController");
 
 routerAPI.get("/users", getUsersAPI);
@@ -19,5 +20,7 @@ routerAPI.put("/users", putUpdateUserAPI);
 routerAPI.delete("/users", deleteUserAPI);
 
 routerAPI.post("/file", postUploadSingleFileAPI);
+
+routerAPI.post("/files", postuploadMultipleFilesAPI);
 
 module.exports = routerAPI;
